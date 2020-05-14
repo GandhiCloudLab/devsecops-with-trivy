@@ -1,0 +1,46 @@
+  - args:
+    - -c
+    - |
+      set -e
+      . ./env-config
+
+      IMAGE_URL=$(outputs.resources.image.url)
+
+      REGISTRY_URL=$(echo $IMAGE_URL | awk -F / '{print $1}')
+      REGISTRY_NAMESPACE=$(echo $IMAGE_URL | awk -F / '{print $2}')
+
+      APP_IMAGE="${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_VERSION}"
+      APP_IMAGE_Temp="${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}-temp:${IMAGE_VERSION}"
+
+      if [[ -n "${REGISTRY_USER}" ]] && [[ -n "${REGISTRY_PASSWORD}" ]]; then
+          buildah login -u "${REGISTRY_USER}" -p "${REGISTRY_PASSWORD}" "${REGISTRY_URL}"
+      fi
+
+      buildah pull ${APP_IMAGE_Temp}
+      buildah tag ${APP_IMAGE_Temp} ${APP_IMAGE}
+      buildah push --tls-verify=${TLSVERIFY} "${APP_IMAGE}" "docker://${APP_IMAGE}"
+      buildah rmi ${APP_IMAGE_Temp}
+    command:
+    - /bin/bash
+    env:
+    - name: REGISTRY_USER
+      valueFrom:
+        secretKeyRef:
+          key: REGISTRY_USER
+          name: ibmcloud-apikey
+          optional: true
+    - name: REGISTRY_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: APIKEY
+          name: ibmcloud-apikey
+          optional: true
+    image: $(inputs.params.BUILDER_IMAGE)
+    name: push
+    resources: {}
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /var/lib/containers
+      name: varlibcontainers
+    workingDir: $(inputs.resources.source.path)

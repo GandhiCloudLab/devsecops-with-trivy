@@ -1,0 +1,42 @@
+        container(name: 'trivy', shell: '/bin/sh') {
+            stage('Trivy Scan') {
+
+                  sh '''#!/bin/sh
+
+                    set -e
+                    . ./env-config
+
+                    echo TLSVERIFY=${TLSVERIFY}
+                    echo CONTEXT=${CONTEXT}
+                    IMAGE_VERSION="0.0.1"
+
+                    if [[ -z "${REGISTRY_PASSWORD}" ]]; then
+                      REGISTRY_PASSWORD="${APIKEY}"
+                    fi
+
+                    APP_IMAGE_Temp="${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}-temp:${IMAGE_VERSION}"
+
+                    export TRIVY_AUTH_URL=${REGISTRY_URL}
+                    export TRIVY_USERNAME=${REGISTRY_USER}
+                    export TRIVY_PASSWORD=${REGISTRY_PASSWORD}
+
+                    echo "Trivy image scanning started.... $APP_IMAGE_Temp"
+
+                    # Trivy scan
+                    trivy ${APP_IMAGE_Temp}
+                    # trivy --exit-code 1 --severity CRITICAL ${APP_IMAGE_Temp}
+
+                    # Trivy scan result processing
+                    my_exit_code=$?
+                    echo "RESULT 1:--- $my_exit_code"
+
+                    # Check scan results
+                    if [ ${my_exit_code} == 1 ]; then
+                        echo "Image scanning failed. Some vulnerabilities found"
+                        exit 1;
+                    else
+                        echo "Image is scanned Successfully. No vulnerabilities found"
+                    fi;
+                '''
+            }
+        }

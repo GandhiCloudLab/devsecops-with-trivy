@@ -1,0 +1,29 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: igc-build-tag-push-v1-2-0
+  namespace: dev-gan2
+spec:
+  inputs:
+    params:
+    - default: docker.io/node:12-stretch
+      name: js-image
+      type: string
+    - default: quay.io/buildah/stable:v1.11.0
+      name: BUILDER_IMAGE
+      type: string
+    - default: docker.io/aquasec/trivy
+      name: trivy
+      type: string      
+    - default: ./Dockerfile
+      name: DOCKERFILE
+      type: string
+    - default: .
+      name: CONTEXT
+      type: string
+    - default: "false"
+      name: TLSVERIFY
+      type: string
+    resources:
+    - name: source
+      type: git

@@ -1,0 +1,12 @@
+    - name: trivy
+      image: docker.io/aquasec/trivy
+      tty: true
+      command: ["/bin/sh"]
+      workingDir: ${workingDir}
+      securityContext:
+        privileged: true
+      envFrom:
+        - configMapRef:
+            name: ibmcloud-config
+        - secretRef:
+            name: ibmcloud-apikey       

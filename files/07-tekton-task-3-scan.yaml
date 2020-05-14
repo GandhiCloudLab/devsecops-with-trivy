@@ -1,0 +1,58 @@
+  - args:
+    - -c
+    - |
+      set -e
+
+      . ./env-config
+
+      IMAGE_URL=$(outputs.resources.image.url)
+
+      REGISTRY_URL=$(echo $IMAGE_URL | awk -F / '{print $1}')
+      REGISTRY_NAMESPACE=$(echo $IMAGE_URL | awk -F / '{print $2}')
+
+      APP_IMAGE="${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}-temp:${IMAGE_VERSION}"
+
+      export TRIVY_AUTH_URL=${REGISTRY_URL}
+      export TRIVY_USERNAME=${REGISTRY_USER}
+      export TRIVY_PASSWORD=${REGISTRY_PASSWORD}
+
+      echo "Trivy image scanning.... $APP_IMAGE"
+
+      # Trivy scan
+      trivy ${APP_IMAGE}
+      #trivy --exit-code 1 --severity CRITICAL ${APP_IMAGE}
+
+      # Trivy scan result processing
+      my_exit_code=$?
+      echo "RESULT 1:--- $my_exit_code"
+
+      if [ ${my_exit_code} == 1 ]; then
+          echo "Image scanning failed. Some vulnerabilities found"
+          exit 1;
+      else
+          echo "Image is scanned Successfully. No vulnerabilities found"
+      fi;
+    command:
+    - /bin/bash
+    env:
+    - name: REGISTRY_USER
+      valueFrom:
+        secretKeyRef:
+          key: REGISTRY_USER
+          name: ibmcloud-apikey
+          optional: true
+    - name: REGISTRY_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: APIKEY
+          name: ibmcloud-apikey
+          optional: true
+    image: $(inputs.params.trivy)
+    name: image-scan
+    resources: {}
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /var/lib/containers
+      name: varlibcontainers
+    workingDir: $(inputs.resources.source.path)
