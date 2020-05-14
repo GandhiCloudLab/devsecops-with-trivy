@@ -155,7 +155,7 @@ The pipeline scripts are defined as Task in the yaml file. lets us see the chang
 
 Here is the declaration about the Trivy image in the `Task`
 
-[Click to view Code Snippet](files/07-tekton-task-1-declaration.txt)  
+[Click to view Code Snippet](files/07-tekton-task-1-declaration.yaml)  
 
 <img src="images/07-tekton-task-1-declaration.png"  width="300" >
 
@@ -171,7 +171,7 @@ Here is the declaration about the Trivy image in the `Task`
 
 Here are the steps for Build Image.
 
-[Click to view Code Snippet](files/07-tekton-task-2-build.txt)  
+[Click to view Code Snippet](files/07-tekton-task-2-build.yaml)  
 
 <img src="images/07-tekton-task-2-build.png" >
 
@@ -195,7 +195,7 @@ Here are the steps for Build Image.
 
 Here are the steps for Scanning
 
-[Click to view Code Snippet](files/07-tekton-task-3-scan.txt)  
+[Click to view Code Snippet](files/07-tekton-task-3-scan.yaml)  
 
 <img src="images/07-tekton-task-3-scan.png" >
 
@@ -218,7 +218,7 @@ Here are the steps for Scanning
 
 Here are the steps for Pushing Image.
 
-[Click to view Code Snippet](files/07-tekton-task-4-push.txt)  
+[Click to view Code Snippet](files/07-tekton-task-4-push.yaml)  
 
 <img src="images/07-tekton-task-4-push.png" >
 
