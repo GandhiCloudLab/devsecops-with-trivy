@@ -64,7 +64,7 @@ The pipeline scripts are defined in the `jenkinsfile`. lets us see the changes t
 
 Here is the declaration about the Trivy image in the `containers` section under `podTemplate` in the `jenkinsfile`
 
-[Code Snippet](04-jenkinsfile-1-declaration.txt)  
+[Click to view Code Snippet](files/04-jenkinsfile-1-declaration.txt)  
 
 <img src="images/04-jenkinsfile-1-declaration.png" width="300" >
 
@@ -80,7 +80,7 @@ Here is the declaration about the Trivy image in the `containers` section under 
 
 Here are the steps to Build Image.
 
-[Code Snippet](04-jenkinsfile-2-build.txt)  
+[Click to view Code Snippet](files/04-jenkinsfile-2-build.txt)  
 
 <img src="images/04-jenkinsfile-2-build.png" >
 
@@ -97,7 +97,7 @@ Here are the steps to Build Image.
 
 Here are the steps for trivy Scanning
 
-[Code Snippet](04-jenkinsfile-3-scan.txt)  
+[Click to view Code Snippet](files/04-jenkinsfile-3-scan.txt)  
 
 <img src="images/04-jenkinsfile-3-scan.png" >
 
@@ -111,7 +111,7 @@ Here are the steps for trivy Scanning
 
 Here are the steps for Push Image.
 
-[Code Snippet](04-jenkinsfile-4-push.txt)  
+[Click to view Code Snippet](files/04-jenkinsfile-4-push.txt)  
 
 <img src="images/04-jenkinsfile-4-push.png" >
 
@@ -155,7 +155,7 @@ The pipeline scripts are defined as Task in the yaml file. lets us see the chang
 
 Here is the declaration about the Trivy image in the `Task`
 
-[Code Snippet](07-tekton-task-1-declaration.txt)  
+[Click to view Code Snippet](files/07-tekton-task-1-declaration.txt)  
 
 <img src="images/07-tekton-task-1-declaration.png"  width="300" >
 
@@ -171,7 +171,7 @@ Here is the declaration about the Trivy image in the `Task`
 
 Here are the steps for Build Image.
 
-[Code Snippet](07-tekton-task-2-build.txt)  
+[Click to view Code Snippet](files/07-tekton-task-2-build.txt)  
 
 <img src="images/07-tekton-task-2-build.png" >
 
@@ -195,7 +195,7 @@ Here are the steps for Build Image.
 
 Here are the steps for Scanning
 
-[Code Snippet](07-tekton-task-3-scan.txt)  
+[Click to view Code Snippet](files/07-tekton-task-3-scan.txt)  
 
 <img src="images/07-tekton-task-3-scan.png" >
 
@@ -218,7 +218,7 @@ Here are the steps for Scanning
 
 Here are the steps for Pushing Image.
 
-[Code Snippet](07-tekton-task-4-push.txt)  
+[Click to view Code Snippet](files/07-tekton-task-4-push.txt)  
 
 <img src="images/07-tekton-task-4-push.png" >
 
