@@ -1,7 +1,7 @@
 
-# Implementing DevSecOps using Aquasec Trivy
+# DevSecOps using Aquasec Trivy
 
-To ensure the security, as part of the DevSecOps, Vulnerability scanning is done on the images. There are several tools available for image scanning. 
+DevSecOps ensures the security by doing Vulnerability scanning on the container images. There are several tools available for image scanning. 
 
 `Trivy` is a Simple and Comprehensive Vulnerability Scanner for Containers, Suitable for CI.
 
